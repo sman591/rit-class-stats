@@ -20,7 +20,7 @@ class ApiController < ApplicationController
     params.require(:import).permit(
       :snapshot_at,
       :college,
-      :capacity_data
+      capacity_data: {}
     )
   end
 end
