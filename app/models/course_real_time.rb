@@ -1,0 +1,2 @@
+class CourseRealTime < ApplicationRecord
+end
