@@ -7,7 +7,7 @@ class ApiControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should post import" do
-    post api_import_url
+    post api_import_url, params: { import: { snapshot_at: Time.now.to_s } }
     assert_response :success
   end
 end
