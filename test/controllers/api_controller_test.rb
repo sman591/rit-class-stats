@@ -60,7 +60,6 @@ class ApiControllerTest < ActionDispatch::IntegrationTest
   end
 
   def valid_params
-    model = build(:course_real_time)
-    model.attributes
+    attributes_for(:course_real_time)
   end
 end
