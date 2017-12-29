@@ -5,7 +5,9 @@ class ApiController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def real_time_all
-    json_response(CourseRealTime.all)
+    json_response(
+      CourseRealTime.select("DISTINCT ON(college) *").order("college, snapshot_at DESC")
+    )
   end
 
   def import
