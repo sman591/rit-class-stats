@@ -10,7 +10,7 @@ class ApiController < ApplicationController
 
   def import
     @course_real_time = CourseRealTime.new(import_params)
-    @course_real_time.save
+    @course_real_time.save!
     json_response(@course_real_time)
   end
 
