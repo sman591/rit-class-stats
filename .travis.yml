@@ -7,9 +7,18 @@ services:
 addons:
   postgresql: '9.6'
 env:
-  - DATABASE_URL="postgres://postgres@localhost/travis_ci_test"
+  global:
+    - DATABASE_URL="postgres://postgres@localhost/travis_ci_test"
+    - CC_TEST_REPORTER_ID=d07eeca4a8d96e7e18ece696d76cce74a7a093c20d454cf643582050d0f512ff
 before_script:
+  # Prepare for Code Climate test coverage
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+  # Create postgres database
   - psql -c 'create database travis_ci_test;' -U postgres
 script:
   - bin/rails db:migrate db:test:prepare
   - RUN_COVERAGE=travis bin/rails test
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
