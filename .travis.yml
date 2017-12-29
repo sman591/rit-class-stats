@@ -4,6 +4,8 @@ sudo: false
 bundler_args: --path vendor --local --without development
 services:
   - postgresql
+addons:
+  postgresql: '9.6'
 env:
   - DATABASE_URL="postgres://postgres@localhost/travis_ci_test"
 before_script:
