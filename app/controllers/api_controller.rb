@@ -17,7 +17,7 @@ class ApiController < ApplicationController
   private
 
   def import_params
-    params.require(:import).permit(
+    params.permit(
       :snapshot_at,
       :college,
       capacity_data: {}

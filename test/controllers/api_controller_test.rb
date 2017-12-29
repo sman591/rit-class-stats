@@ -7,14 +7,23 @@ class ApiControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should post import" do
-    post api_import_url, params: { import: { snapshot_at: Time.now.to_s } }
+    post api_import_url, params: valid_params
     assert_response :success
   end
 
   test "should post import with capacity_data" do
-    post api_import_url, params: { import: { capacity_data: { foo: 'bar' } } }
+    params = valid_params
+    params[:capacity_data] = { foo: 'bar' }
+    post api_import_url, params: params
     assert_response :success
     body = JSON.parse(@response.body)
     assert_equal "bar", body['capacity_data']['foo']
+  end
+
+  private
+
+  def valid_params
+    model = build(:course_real_time)
+    model.attributes
   end
 end
