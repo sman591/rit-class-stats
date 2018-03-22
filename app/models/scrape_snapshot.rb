@@ -1,0 +1,2 @@
+class ScrapeSnapshot < ApplicationRecord
+end

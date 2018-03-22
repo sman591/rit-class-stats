@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171228224456) do
+ActiveRecord::Schema.define(version: 20180322033851) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,16 @@ ActiveRecord::Schema.define(version: 20171228224456) do
     t.datetime "snapshot_at"
     t.citext "college"
     t.jsonb "capacity_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "scrape_snapshots", force: :cascade do |t|
+    t.datetime "snapshot_at"
+    t.datetime "consume_started_at"
+    t.datetime "consume_finished_at"
+    t.citext "college"
+    t.jsonb "courses"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
