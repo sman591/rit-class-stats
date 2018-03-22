@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class ApiControllerTest < ActionDispatch::IntegrationTest
+  include ActiveJob::TestHelper
+
   test "#real_time_all should succeed" do
     get api_real_time_all_url
     assert_response :success
@@ -44,6 +46,12 @@ class ApiControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     body = parse_json_body
     assert_equal 'Data imported', body['message']
+  end
+
+  test "import should queue a consumer job" do
+    assert_enqueued_jobs 1 do
+      post api_import_url, params: valid_params
+    end
   end
 
   test "should return error on failed validation" do
