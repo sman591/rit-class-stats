@@ -14,7 +14,7 @@ class ApiController < ApplicationController
     @snapshot = ScrapeSnapshot.new(import_params)
     @snapshot.save!
     ScrapeSnapshotConsumerJob.perform_later(@snapshot.id)
-    json_response({ message: "Data imported" })
+    head :ok
   end
 
   private

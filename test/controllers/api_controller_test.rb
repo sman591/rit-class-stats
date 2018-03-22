@@ -44,8 +44,6 @@ class ApiControllerTest < ActionDispatch::IntegrationTest
     params[:courses] = [{ foo: 'bar' }]
     post_json api_import_url, params: params
     assert_response :success
-    body = parse_json_body
-    assert_equal 'Data imported', body['message']
   end
 
   test "import should queue a consumer job" do
