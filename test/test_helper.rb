@@ -17,4 +17,12 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 
   include FactoryBot::Syntax::Methods
+
+  def post_json(location, params)
+    params ||= {}
+    params[:headers] ||= {}
+    params[:headers]['content-type'] ||= 'application/json'
+    params[:params] = params[:params].to_json
+    post location, params
+  end
 end

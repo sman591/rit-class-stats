@@ -35,14 +35,14 @@ class ApiControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should post import" do
-    post api_import_url, params: valid_params
+    post_json api_import_url, params: valid_params
     assert_response :success
   end
 
   test "should post import with courses" do
     params = valid_params
     params[:courses] = [{ foo: 'bar' }]
-    post api_import_url, params: params
+    post_json api_import_url, params: params
     assert_response :success
     body = parse_json_body
     assert_equal 'Data imported', body['message']
@@ -50,12 +50,12 @@ class ApiControllerTest < ActionDispatch::IntegrationTest
 
   test "import should queue a consumer job" do
     assert_enqueued_jobs 1 do
-      post api_import_url, params: valid_params
+      post_json api_import_url, params: valid_params
     end
   end
 
   test "should return error on failed validation" do
-    post api_import_url, params: {}
+    post_json api_import_url, params: {}
     assert_response :unprocessable_entity
     body = parse_json_body
     assert_not_empty body['message']
