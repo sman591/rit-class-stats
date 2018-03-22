@@ -37,13 +37,13 @@ class ApiControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should post import with capacity_data" do
+  test "should post import with courses" do
     params = valid_params
-    params[:capacity_data] = { foo: 'bar' }
+    params[:courses] = [{ foo: 'bar' }]
     post api_import_url, params: params
     assert_response :success
     body = parse_json_body
-    assert_equal "bar", body['capacity_data']['foo']
+    assert_equal 'Data imported', body['message']
   end
 
   test "should return error on failed validation" do
@@ -60,6 +60,6 @@ class ApiControllerTest < ActionDispatch::IntegrationTest
   end
 
   def valid_params
-    attributes_for(:course_real_time)
+    attributes_for(:scrape_snapshot)
   end
 end

@@ -11,9 +11,9 @@ class ApiController < ApplicationController
   end
 
   def import
-    @course_real_time = CourseRealTime.new(import_params)
-    @course_real_time.save!
-    json_response(@course_real_time)
+    @snapshot = ScrapeSnapshot.new(import_params)
+    @snapshot.save!
+    json_response({ message: "Data imported" })
   end
 
   private
@@ -22,7 +22,7 @@ class ApiController < ApplicationController
     params.permit(
       :snapshot_at,
       :college,
-      capacity_data: {}
+      courses: [{}]
     )
   end
 end
