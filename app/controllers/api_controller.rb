@@ -20,10 +20,11 @@ class ApiController < ApplicationController
   private
 
   def import_params
+    courses_params = (params[:courses] || [{}])[0].keys
     params.permit(
       :snapshot_at,
       :college,
-      courses: [{}]
+      courses: [courses_params]
     )
   end
 end
