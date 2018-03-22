@@ -1,3 +1,40 @@
 // Place all the styles related to the Pages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.CollegeSeats--courses {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 52px);
+  grid-gap: 5px;
+  grid-auto-rows: minmax(10px, auto);
+}
+
+.CourseSeats {
+  border: 1px solid #ddd;
+}
+
+.CourseSeats--code {
+  font-size: 10px;
+  overflow: hidden;
+  height: 12px;
+}
+
+.CourseSeats--seats {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.CourseSeats--seat {
+  flex: none;
+  width: 5px;
+  height: 5px;
+  background: #333;
+}
+
+.CourseSeats--seat--e {
+  background: #dfd;
+}
+
+.CourseSeats--seat--f {
+  background: #fdd;
+}
