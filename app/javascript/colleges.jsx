@@ -1,24 +1,29 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import CollegeSeats from 'college_seats';
+import CollegeCard from 'college_card'
 
 export default class Colleges extends React.PureComponent {
   state = {
-    colleges: [],
-  };
+    colleges: []
+  }
 
   componentDidMount() {
     fetch('/api/real_time_all')
       .then((response) => response.json().then((json) => {
-        this.setState({ colleges: json });
+        this.setState({ colleges: json })
       }))
   }
 
   render() {
     return (
       <div>
-        {this.state.colleges.map((college) => <CollegeSeats {...college} key={college.college} />)}
+        {this.state.colleges.map((college) =>
+          <CollegeCard
+            key={college.college}
+            code={college.college}
+          />
+        )}
       </div>
     );
   }
