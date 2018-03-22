@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CourseRealTime < ApplicationRecord
   validates_presence_of :college
   validates_presence_of :snapshot_at

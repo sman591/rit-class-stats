@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require File.expand_path('../../config/environment', __FILE__)
 
 # simplecov must be started before rails/test_help

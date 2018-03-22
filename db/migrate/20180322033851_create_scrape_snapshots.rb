@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateScrapeSnapshots < ActiveRecord::Migration[5.1]
   def change
     create_table :scrape_snapshots do |t|

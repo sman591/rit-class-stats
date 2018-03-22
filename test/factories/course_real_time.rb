@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :course_real_time do
     snapshot_at Faker::Time.between(2.days.ago, Date.today)
