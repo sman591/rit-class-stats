@@ -5,12 +5,12 @@ require 'test_helper'
 class ApiControllerTest < ActionDispatch::IntegrationTest
   include ActiveJob::TestHelper
 
-  test "#real_time_all should succeed" do
+  test '#real_time_all should succeed' do
     get api_real_time_all_url
     assert_response :success
   end
 
-  test "#real_time_all should return an entry per college" do
+  test '#real_time_all should return an entry per college' do
     create_list(:course_real_time, 5, college: 'foo')
     create_list(:course_real_time, 5, college: 'bar')
     create_list(:course_real_time, 5, college: 'baz')
@@ -22,7 +22,7 @@ class ApiControllerTest < ActionDispatch::IntegrationTest
     assert_equal 3, body.count
   end
 
-  test "#real_time_all should return most recent entry" do
+  test '#real_time_all should return most recent entry' do
     recent_time = 1.day.ago.iso8601(3)
     create(:course_real_time, college: 'foo', snapshot_at: 5.days.ago)
     create(:course_real_time, college: 'foo', snapshot_at: recent_time)
@@ -33,15 +33,15 @@ class ApiControllerTest < ActionDispatch::IntegrationTest
     body = parse_json_body
 
     assert_equal 1, body.count
-    assert_match recent_time, body[0]["snapshot_at"]
+    assert_match recent_time, body[0]['snapshot_at']
   end
 
-  test "should post import" do
+  test 'should post import' do
     post_json api_import_url, params: valid_params
     assert_response :success
   end
 
-  test "should post import with courses" do
+  test 'should post import with courses' do
     params = valid_params
     params[:courses] = [{ foo: 'bar' }]
     post_json api_import_url, params: params
@@ -49,13 +49,13 @@ class ApiControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'bar', ScrapeSnapshot.last.courses[0]['foo']
   end
 
-  test "import should queue a consumer job" do
+  test 'import should queue a consumer job' do
     assert_enqueued_jobs 1 do
       post_json api_import_url, params: valid_params
     end
   end
 
-  test "should return error on failed validation" do
+  test 'should return error on failed validation' do
     post_json api_import_url, params: {}
     assert_response :unprocessable_entity
     body = parse_json_body

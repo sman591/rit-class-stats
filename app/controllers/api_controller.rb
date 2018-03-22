@@ -8,7 +8,7 @@ class ApiController < ApplicationController
 
   def real_time_all
     json_response(
-      CourseRealTime.select("DISTINCT ON(college) *").order("college, snapshot_at DESC")
+      CourseRealTime.select('DISTINCT ON(college) *').order('college, snapshot_at DESC')
     )
   end
 

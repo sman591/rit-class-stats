@@ -5,6 +5,12 @@
 
 # These are all the cops that are enabled in the default configuration.
 
+AllCops:
+  Exclude:
+    - vendor/**/*
+    - node_modules/**/*
+    - db/schema.rb
+
 #################### Bundler ###############################
 
 Bundler/DuplicatedGem:
@@ -1911,7 +1917,7 @@ Style/StructInheritance:
 Style/SymbolArray:
   Description: 'Use %i or %I for arrays of symbols.'
   StyleGuide: '#percent-i'
-  Enabled: true
+  Enabled: false # changed from default
 
 Style/SymbolLiteral:
   Description: 'Use plain symbols instead of string symbols when possible.'
@@ -2006,7 +2012,7 @@ Style/WhileUntilModifier:
 Style/WordArray:
   Description: 'Use %w or %W for arrays of words.'
   StyleGuide: '#percent-w'
-  Enabled: true
+  Enabled: false # changed from default
 
 Style/YodaCondition:
   Description: 'Do not use literals as the first operand of a comparison.'
