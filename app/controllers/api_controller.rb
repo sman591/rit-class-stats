@@ -15,7 +15,7 @@ class ApiController < ApplicationController
   def import
     @snapshot = ScrapeSnapshot.new(import_params)
     @snapshot.save!
-    ScrapeSnapshotConsumerJob.perform_later(@snapshot.id)
+    ScrapeSnapshotConsumerJob.perform_later(snapshot_id: @snapshot.id)
     head :ok
   end
 
