@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class ScrapeSnapshotTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  should validate_presence_of :college
+  should validate_presence_of :snapshot_at
+  should validate_presence_of :courses
 end
