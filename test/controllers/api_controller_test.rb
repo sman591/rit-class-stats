@@ -43,10 +43,11 @@ class ApiControllerTest < ActionDispatch::IntegrationTest
 
   test 'should post import with courses' do
     params = valid_params
-    params[:courses] = [{ foo: 'bar' }]
+    params[:courses] = [{ foo: 'bar', baz: { abc: 'def' } }]
     post_json api_import_url, params: params
     assert_response :success
     assert_equal 'bar', ScrapeSnapshot.last.courses[0]['foo']
+    assert_equal 'def', ScrapeSnapshot.last.courses[0]['baz']['abc']
   end
 
   test 'import should queue a consumer job' do

@@ -13,7 +13,9 @@ class ApiController < ApplicationController
   end
 
   def import
+    courses = params.delete(:courses)
     @snapshot = ScrapeSnapshot.new(import_params)
+    @snapshot.courses = courses
     @snapshot.save!
     ScrapeSnapshotConsumerJob.perform_later(snapshot_id: @snapshot.id)
     head :ok
@@ -22,11 +24,9 @@ class ApiController < ApplicationController
   private
 
   def import_params
-    courses_params = (params[:courses] || [{}])[0].keys
     params.permit(
       :snapshot_at,
-      :college,
-      courses: [courses_params]
+      :college
     )
   end
 end
