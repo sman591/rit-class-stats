@@ -1,5 +1,9 @@
 language: ruby
-cache: bundler
+cache:
+  bundler: true
+  directories:
+    - node_modules
+  yarn: true
 sudo: false
 bundler_args: --path vendor --local --without development
 services:
@@ -17,6 +21,12 @@ before_script:
   - ./cc-test-reporter before-build
   # Create postgres database
   - psql -c 'create database travis_ci_test;' -U postgres
+  # Run webpack build
+  - nvm install node
+  - node -v
+  - npm i -g yarn
+  - yarn
+  - ./bin/webpack
 script:
   - bin/rails db:migrate db:test:prepare
   - RUN_COVERAGE=travis bin/rails test
