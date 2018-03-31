@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+
+echo "---> Installing yarn ..."
+curl -o- -L https://yarnpkg.com/install.sh | bash
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+echo "---> Yarn version:"
+yarn --version
+
+/usr/libexec/s2i/assemble
+rc=$?
+
+# if [ $rc -eq 0 ]; then
+#     echo "After successful assembling"
+# else
+#     echo "After failed assembling"
+# fi
+
+exit $rc
