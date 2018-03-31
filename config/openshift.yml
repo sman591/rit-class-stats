@@ -221,37 +221,23 @@ objects:
       imageChangeParams:
         automatic: true
         containerNames:
-        - "${NAME}"
+        - worker
         from:
           kind: ImageStreamTag
           name: "${NAME}:latest"
     - type: ConfigChange
     replicas: 1
     selector:
-      name: "${NAME}"
+      name: worker
     template:
       metadata:
-        name: "${NAME}"
+        name: worker
         labels:
-          name: "${NAME}"
+          name: worker
       spec:
         containers:
-        - name: "${NAME}"
+        - name: worker
           image: " "
-          ports:
-          - containerPort: 8080
-          readinessProbe:
-            timeoutSeconds: 3
-            initialDelaySeconds: 5
-            httpGet:
-              path: "/articles"
-              port: 8080
-          livenessProbe:
-            timeoutSeconds: 3
-            initialDelaySeconds: 10
-            httpGet:
-              path: "/articles"
-              port: 8080
           env:
           - name: DATABASE_SERVICE_NAME
             value: "${DATABASE_SERVICE_NAME}"
@@ -385,8 +371,8 @@ objects:
           resources:
             limits:
               memory: "${MEMORY_POSTGRESQL_LIMIT}"
-- apiVersion: v1
-  kind: Service
+- kind: Service
+  apiVersion: v1
   metadata:
     annotations:
       template.openshift.io/expose-uri: redis://{.spec.clusterIP}:{.spec.ports[?(.name=="redis")].port}
@@ -404,8 +390,8 @@ objects:
     type: ClusterIP
   status:
     loadBalancer: {}
-- apiVersion: v1
-  kind: DeploymentConfig
+- kind: DeploymentConfig
+  apiVersion: v1
   metadata:
     annotations:
       template.alpha.openshift.io/wait-for-ready: 'true'
