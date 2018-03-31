@@ -2,7 +2,7 @@
 kind: Template
 apiVersion: v1
 metadata:
-  name: rails-postgresql-example
+  name: rit-class-stats
   annotations:
     openshift.io/display-name: Rails + PostgreSQL + Redis (Ephemeral)
     description: |-
@@ -25,8 +25,8 @@ message: |-
 
   For more information about using this template, including OpenShift considerations, see https://github.com/openshift/rails-ex/blob/master/README.md.
 labels:
-  template: rails-postgresql-example
-  app: rails-postgresql-example
+  template: rit-class-stats
+  app: rit-class-stats
 objects:
 - kind: Secret
   apiVersion: v1
@@ -389,12 +389,12 @@ parameters:
   displayName: Name
   description: The name assigned to all of the frontend objects defined in this template.
   required: true
-  value: rails-postgresql-example
+  value: web
 - name: NAMESPACE
   displayName: Namespace
   required: true
   description: The OpenShift Namespace where the ImageStream resides.
-  value: openshift
+  value: rit-class-stats
 - name: MEMORY_LIMIT
   displayName: Memory Limit
   required: true
