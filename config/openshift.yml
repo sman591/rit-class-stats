@@ -183,6 +183,11 @@ objects:
             value: "${POSTGRESQL_MAX_CONNECTIONS}"
           - name: POSTGRESQL_SHARED_BUFFERS
             value: "${POSTGRESQL_SHARED_BUFFERS}"
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: "${NAME}"
+                key: redis-password
           - name: APPLICATION_DOMAIN
             value: "${APPLICATION_DOMAIN}"
           - name: APPLICATION_USER
@@ -262,6 +267,11 @@ objects:
             value: "${POSTGRESQL_MAX_CONNECTIONS}"
           - name: POSTGRESQL_SHARED_BUFFERS
             value: "${POSTGRESQL_SHARED_BUFFERS}"
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: "${NAME}"
+                key: redis-password
           - name: APPLICATION_DOMAIN
             value: "${APPLICATION_DOMAIN}"
           - name: APPLICATION_USER
@@ -413,8 +423,8 @@ objects:
           - name: REDIS_PASSWORD
             valueFrom:
               secretKeyRef:
-                key: database-password
-                name: "${REDIS_SERVICE_NAME}"
+                key: redis-password
+                name: "${NAME}"
           image: " "
           imagePullPolicy: IfNotPresent
           livenessProbe:
@@ -459,7 +469,7 @@ objects:
         from:
           kind: ImageStreamTag
           name: redis:${REDIS_VERSION}
-          namespace: "${NAMESPACE}"
+          namespace: openshift
         lastTriggeredImage: ''
       type: ImageChange
     - type: ConfigChange
