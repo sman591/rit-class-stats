@@ -42,6 +42,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 ## Custom gems below, standard above ##
 
 gem 'rack-cors'
+gem 'sidekiq'
 
 ## End custom gems ##
 

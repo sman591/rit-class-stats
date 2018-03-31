@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
+
   scope '/api', controller: :api, as: :api, defaults: { format: :json } do
     get :real_time_all
     post :import
