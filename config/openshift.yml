@@ -35,6 +35,7 @@ objects:
   stringData:
     database-user: "${DATABASE_USER}"
     database-password: "${DATABASE_PASSWORD}"
+    database-admin-password: "${DATABASE_ADMIN_PASSWORD}"
     application-user: "${APPLICATION_USER}"
     application-password: "${APPLICATION_PASSWORD}"
     keybase: "${SECRET_KEY_BASE}"
@@ -276,6 +277,11 @@ objects:
               secretKeyRef:
                 name: "${NAME}"
                 key: database-password
+          - name: POSTGRESQL_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: "${NAME}"
+                key: database-admin-password
           - name: POSTGRESQL_DATABASE
             value: "${DATABASE_NAME}"
           - name: POSTGRESQL_MAX_CONNECTIONS
@@ -363,6 +369,10 @@ parameters:
   from: user[A-Z0-9]{3}
 - name: DATABASE_PASSWORD
   displayName: Database Password
+  generate: expression
+  from: "[a-zA-Z0-9]{8}"
+- name: DATABASE_ADMIN_PASSWORD
+  displayName: Database Admin Password
   generate: expression
   from: "[a-zA-Z0-9]{8}"
 - name: DATABASE_NAME
