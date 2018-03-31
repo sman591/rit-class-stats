@@ -33,6 +33,7 @@ objects:
   metadata:
     name: "${NAME}"
   stringData:
+    redis-password: "${REDIS_PASSWORD}"
     database-user: "${DATABASE_USER}"
     database-password: "${DATABASE_PASSWORD}"
     database-admin-password: "${DATABASE_ADMIN_PASSWORD}"
@@ -384,6 +385,98 @@ objects:
           resources:
             limits:
               memory: "${MEMORY_POSTGRESQL_LIMIT}"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      template.openshift.io/expose-uri: redis://{.spec.clusterIP}:{.spec.ports[?(.name=="redis")].port}
+    name: "${REDIS_SERVICE_NAME}"
+  spec:
+    ports:
+    - name: redis
+      nodePort: 0
+      port: 6379
+      protocol: TCP
+      targetPort: 6379
+    selector:
+      name: "${REDIS_SERVICE_NAME}"
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      template.alpha.openshift.io/wait-for-ready: 'true'
+    name: "${REDIS_SERVICE_NAME}"
+  spec:
+    replicas: 1
+    selector:
+      name: "${REDIS_SERVICE_NAME}"
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          name: "${REDIS_SERVICE_NAME}"
+      spec:
+        containers:
+        - capabilities: {}
+          env:
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: database-password
+                name: "${REDIS_SERVICE_NAME}"
+          image: " "
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            initialDelaySeconds: 30
+            tcpSocket:
+              port: 6379
+            timeoutSeconds: 1
+          name: redis
+          ports:
+          - containerPort: 6379
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - "/bin/sh"
+              - "-i"
+              - "-c"
+              - test "$(redis-cli -h 127.0.0.1 -a $REDIS_PASSWORD ping)" == "PONG"
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+          resources:
+            limits:
+              memory: "${MEMORY_LIMIT}"
+          securityContext:
+            capabilities: {}
+            privileged: false
+          terminationMessagePath: "/dev/termination-log"
+          volumeMounts:
+          - mountPath: "/var/lib/redis/data"
+            name: "${REDIS_SERVICE_NAME}-data"
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        volumes:
+        - emptyDir:
+            medium: ''
+          name: "${REDIS_SERVICE_NAME}-data"
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - redis
+        from:
+          kind: ImageStreamTag
+          name: redis:${REDIS_VERSION}
+          namespace: "${NAMESPACE}"
+        lastTriggeredImage: ''
+      type: ImageChange
+    - type: ConfigChange
 parameters:
 - name: NAME
   displayName: Name
@@ -482,3 +575,13 @@ parameters:
   displayName: Custom RubyGems Mirror URL
   description: The custom RubyGems mirror URL
   value: ''
+- name: REDIS_SERVICE_NAME
+  displayName: Redis Service Name
+  value: redis
+- name: REDIS_PASSWORD
+  displayName: Redis Connection Password
+  generate: expression
+  from: "[a-zA-Z0-9]{16}"
+- name: REDIS_VERSION
+  displayName: Version of Redis Image
+  value: '3.2'
