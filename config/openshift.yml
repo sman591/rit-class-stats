@@ -199,6 +199,99 @@ objects:
           resources:
             limits:
               memory: "${MEMORY_LIMIT}"
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: worker
+    annotations:
+      description: Defines how to deploy the application server
+      template.alpha.openshift.io/wait-for-ready: 'true'
+  spec:
+    strategy:
+      type: Custom
+      customParams:
+        image: "${NAME}:latest"
+        command:
+          - bundle
+          - exec
+          - sidekiq
+    triggers:
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - "${NAME}"
+        from:
+          kind: ImageStreamTag
+          name: "${NAME}:latest"
+    - type: ConfigChange
+    replicas: 1
+    selector:
+      name: "${NAME}"
+    template:
+      metadata:
+        name: "${NAME}"
+        labels:
+          name: "${NAME}"
+      spec:
+        containers:
+        - name: "${NAME}"
+          image: " "
+          ports:
+          - containerPort: 8080
+          readinessProbe:
+            timeoutSeconds: 3
+            initialDelaySeconds: 5
+            httpGet:
+              path: "/articles"
+              port: 8080
+          livenessProbe:
+            timeoutSeconds: 3
+            initialDelaySeconds: 10
+            httpGet:
+              path: "/articles"
+              port: 8080
+          env:
+          - name: DATABASE_SERVICE_NAME
+            value: "${DATABASE_SERVICE_NAME}"
+          - name: POSTGRESQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: "${NAME}"
+                key: database-user
+          - name: POSTGRESQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: "${NAME}"
+                key: database-password
+          - name: POSTGRESQL_DATABASE
+            value: "${DATABASE_NAME}"
+          - name: SECRET_KEY_BASE
+            valueFrom:
+              secretKeyRef:
+                name: "${NAME}"
+                key: keybase
+          - name: POSTGRESQL_MAX_CONNECTIONS
+            value: "${POSTGRESQL_MAX_CONNECTIONS}"
+          - name: POSTGRESQL_SHARED_BUFFERS
+            value: "${POSTGRESQL_SHARED_BUFFERS}"
+          - name: APPLICATION_DOMAIN
+            value: "${APPLICATION_DOMAIN}"
+          - name: APPLICATION_USER
+            valueFrom:
+              secretKeyRef:
+                name: "${NAME}"
+                key: application-user
+          - name: APPLICATION_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: "${NAME}"
+                key: application-password
+          - name: RAILS_ENV
+            value: "${RAILS_ENV}"
+          resources:
+            limits:
+              memory: "${MEMORY_LIMIT}"
 - kind: Service
   apiVersion: v1
   metadata:
