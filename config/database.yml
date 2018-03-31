@@ -84,6 +84,7 @@ test:
 <% db_service = ENV.fetch("DATABASE_SERVICE_NAME","").upcase %>
 
 production:
+  <<: *default
   username: <%= user %>
   password: <%= password %>
   host: <%= ENV["#{db_service}_SERVICE_HOST"] %>
