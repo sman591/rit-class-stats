@@ -12,6 +12,12 @@ class ApiController < ApplicationController
     )
   end
 
+  def courses
+    json_response(
+      Course.order('college, department, course_id DESC')
+    )
+  end
+
   def import
     courses = params.delete(:courses)
     @snapshot = ScrapeSnapshot.new(import_params)

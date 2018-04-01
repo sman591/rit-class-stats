@@ -36,6 +36,23 @@ class ApiControllerTest < ActionDispatch::IntegrationTest
     assert_match recent_time, body[0]['snapshot_at']
   end
 
+  test '#courses should succeed' do
+    get api_courses_url
+    assert_response :success
+  end
+
+  test '#courses should return each course' do
+    create(:course, course_id: 'foo')
+    create(:course, course_id: 'bar')
+    create(:course, course_id: 'baz')
+
+    get api_courses_url
+    assert_response :success
+    body = parse_json_body
+
+    assert_equal 3, body.count
+  end
+
   test 'should post import' do
     post_json api_import_url, params: valid_params
     assert_response :success
