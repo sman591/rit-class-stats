@@ -36,11 +36,31 @@ export const loading = () => {
   };
 };
 
-export const update = (courses) => {
-  return dispatch => {
+export const forceUpdate = (college) => {
+  return async (dispatch, getState) => {
+    dispatch(loading())
+
+    const response = await fetch('/api/courses')
+    const json = await response.json()
+    const courseData = json
+    const courses = courseData.reduce((acc, course) => {
+      acc[course.course_id] = course
+      return acc
+    }, {})
+
     dispatch({
       type: UPDATE,
       courses,
     });
+  };
+};
+
+export const update = (college) => {
+  return (dispatch, getState) => {
+    const { courses } = getState()
+    if (courses.loadedAt !== null) {
+      return
+    }
+    dispatch(forceUpdate(college))
   };
 };

@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { update as updateCourses } from 'modules/courses';
-
 import CourseSeats from 'course_seats'
 
 class CollegeSeats extends React.PureComponent {
@@ -12,24 +11,12 @@ class CollegeSeats extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.props.coursesLoaded || this.fetchCourses()
+    this.props.updateCourses(this.props.college)
     this.timeout = setTimeout(() => this.setState({ didLoad: true }), 5000)
   }
 
   componentWillUnmount() {
     clearTimeout(this.timeout)
-  }
-
-  async fetchCourses() {
-    const response = await fetch('/api/courses')
-    const json = await response.json()
-    const code = this.props.college;
-    const courseData = json.filter((course) => course.college === code)
-    const courses = courseData.reduce((acc, course) => {
-      acc[course.course_id] = course
-      return acc
-    }, {})
-    this.props.updateCourses(courses)
   }
 
   render() {
