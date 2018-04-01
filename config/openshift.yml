@@ -4,26 +4,11 @@ apiVersion: v1
 metadata:
   name: rit-class-stats
   annotations:
-    openshift.io/display-name: Rails + PostgreSQL + Redis (Ephemeral)
-    description: |-
-      An example Rails application with a PostgreSQL database. For more information about using this template, including OpenShift considerations, see https://github.com/openshift/rails-ex/blob/master/README.md.
-
-      WARNING: Any data stored will be lost upon pod destruction. Only use this template for testing.
-    tags: quickstart,ruby,rails,redis
+    openshift.io/display-name: RIT Class Stats (Rails + PostgreSQL + Redis)
+    description: Config for RIT Class Stats
+    tags: ruby,rails,redis,postgres
     iconClass: icon-ruby
-    openshift.io/long-description: This template defines resources needed to develop
-      a Rails application, including a build configuration, application deployment
-      configuration, and database deployment configuration.  The database is stored
-      in non-persistent storage, so this configuration should be used for experimental
-      purposes only.
-    openshift.io/provider-display-name: Red Hat, Inc.
-    openshift.io/documentation-url: https://github.com/openshift/rails-ex
-    openshift.io/support-url: https://access.redhat.com
     template.openshift.io/bindable: 'false'
-message: |-
-  The following service(s) have been created in your project: ${NAME}, ${DATABASE_SERVICE_NAME}.
-
-  For more information about using this template, including OpenShift considerations, see https://github.com/openshift/rails-ex/blob/master/README.md.
 labels:
   template: rit-class-stats
   app: rit-class-stats
@@ -352,8 +337,9 @@ objects:
           name: "${DATABASE_SERVICE_NAME}"
       spec:
         volumes:
-        - name: data
-          emptyDir: {}
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: "${DATABASE_SERVICE_NAME}"
         containers:
         - name: postgresql
           image: " "
@@ -373,7 +359,7 @@ objects:
               - "/usr/libexec/check-container"
               - "--live"
           volumeMounts:
-          - name: data
+          - name: postgres-data
             mountPath: "/var/lib/pgsql/data"
           env:
           - name: POSTGRESQL_USER
