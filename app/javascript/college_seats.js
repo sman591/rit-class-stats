@@ -5,6 +5,12 @@ import { connect } from 'react-redux'
 import { update as updateCourses } from 'modules/courses'
 import CourseSeats from 'course_seats'
 
+const sortCourses = (a, b) => {
+  const keyA = a.public_id
+  const keyB = b.public_id
+  return keyA.localeCompare(keyB)
+}
+
 class CollegeSeats extends React.PureComponent {
   state = {
     didLoad: false
@@ -27,6 +33,7 @@ class CollegeSeats extends React.PureComponent {
       acc[course.department].push(course)
       return acc
     }, {})
+    Object.values(coursesByDepartment).forEach(value => value.sort(sortCourses))
 
     let className = ''
     if (this.state.didLoad) {
