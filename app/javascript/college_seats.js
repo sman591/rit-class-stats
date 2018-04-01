@@ -40,9 +40,9 @@ class CollegeSeats extends React.PureComponent {
   }
 }
 
-const mapStateToProps = ({ courses }) => ({
-  courses: courses.courses,
-  coursesLoaded: courses.loadedAt !== null,
+const mapStateToProps = ({ courses }, { college }) => ({
+  courses: courses[college].courses,
+  coursesLoaded: courses[college].loadedAt !== null,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
