@@ -13,7 +13,6 @@ export default class College extends React.PureComponent {
 
   componentDidMount() {
     this.fetchRealtimeData()
-    this.fetchCourses()
   }
 
   async fetchRealtimeData() {
@@ -27,18 +26,6 @@ export default class College extends React.PureComponent {
     })
   }
 
-  async fetchCourses() {
-    const response = await fetch('/api/courses')
-    const json = await response.json()
-    const code = this.props.match.params.code.toUpperCase()
-    const courseData = json.filter((course) => course.college === code)
-    const courses = courseData.reduce((acc, course) => {
-      acc[course.course_id] = course
-      return acc
-    }, {})
-    this.setState({ courses })
-  }
-
   render() {
     const code = this.props.match.params.code.toUpperCase()
     return (
@@ -46,7 +33,7 @@ export default class College extends React.PureComponent {
         <Link to="/"><button>&laquo; Back</button></Link>
         <h1>{code}</h1>
         {!this.state.loaded && 'Loading...'}
-        {this.state.loaded && <CollegeSeats {...this.state.real_time_data} courses={this.state.courses} /> }
+        {this.state.loaded && <CollegeSeats {...this.state.real_time_data} /> }
       </div>
     );
   }
