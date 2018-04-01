@@ -89,7 +89,7 @@ objects:
       sourceStrategy:
         from:
           kind: ImageStreamTag
-          namespace: "${NAMESPACE}"
+          namespace: openshift
           name: ruby:2.4
         env:
         - name: RUBYGEM_MIRROR
@@ -228,7 +228,7 @@ objects:
       sourceStrategy:
         from:
           kind: ImageStreamTag
-          namespace: "${NAMESPACE}"
+          namespace: openshift
           name: ruby:2.4
         env:
         - name: RUBYGEM_MIRROR
@@ -358,7 +358,7 @@ objects:
         - postgresql
         from:
           kind: ImageStreamTag
-          namespace: "${NAMESPACE}"
+          namespace: openshift
           name: postgresql:9.5
     - type: ConfigChange
     replicas: 1
