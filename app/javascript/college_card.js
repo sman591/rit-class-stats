@@ -9,6 +9,6 @@ export default class CollegeCard extends React.PureComponent {
         <h1>{this.props.code}</h1>
         <Link to={`/college/${this.props.code}`}><button>Open &raquo;</button></Link>
       </div>
-    );
+    )
   }
 }

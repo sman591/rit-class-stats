@@ -19,7 +19,7 @@ export default class College extends React.PureComponent {
     const response = await fetch('/api/real_time_all')
     const json = await response.json()
     const code = this.props.match.params.code.toUpperCase()
-    const real_time_data = json.find((college) => college.college === code);
+    const real_time_data = json.find((college) => college.college === code)
     this.setState({
       real_time_data,
       loaded: true
@@ -35,6 +35,6 @@ export default class College extends React.PureComponent {
         {!this.state.loaded && 'Loading...'}
         {this.state.loaded && <CollegeSeats {...this.state.real_time_data} /> }
       </div>
-    );
+    )
   }
 }

@@ -11,7 +11,7 @@ export default class CourseSeats extends React.PureComponent {
     for (let i = 0; i < filledSeats; i++) {
       seats[i] = FILLED
     }
-    const courseName = (this.props.course && this.props.course.public_id) || this.props.code;
+    const courseName = (this.props.course && this.props.course.public_id) || this.props.code
     return (
       <div className="CourseSeats">
         <div className="CourseSeats--code">{courseName}</div>
@@ -24,6 +24,6 @@ export default class CourseSeats extends React.PureComponent {
           )}
         </div>
       </div>
-    );
+    )
   }
 }

@@ -24,6 +24,6 @@ export default class Colleges extends React.PureComponent {
           />
         )}
       </div>
-    );
+    )
   }
 }

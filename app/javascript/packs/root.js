@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux';
+import { Provider } from 'react-redux'
 import {
   BrowserRouter as Router,
   Route,
@@ -10,7 +10,7 @@ import {
 
 import Colleges from '../colleges'
 import College from '../college'
-import store from '../store';
+import store from '../store'
 
 class Root extends React.Component {
   state = {

@@ -2,7 +2,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { update as updateCourses } from 'modules/courses';
+import { update as updateCourses } from 'modules/courses'
 import CourseSeats from 'course_seats'
 
 class CollegeSeats extends React.PureComponent {
@@ -21,9 +21,9 @@ class CollegeSeats extends React.PureComponent {
 
   render() {
     const keys = Object.keys(this.props.capacity_data)
-    let className = 'CollegeSeats--courses';
+    let className = 'CollegeSeats--courses'
     if (this.state.didLoad) {
-      className += ' CollegeSeats--after-first-load';
+      className += ' CollegeSeats--after-first-load'
     }
     return (
       <div className={className}>
@@ -36,7 +36,7 @@ class CollegeSeats extends React.PureComponent {
           />
         )}
       </div>
-    );
+    )
   }
 }
 
