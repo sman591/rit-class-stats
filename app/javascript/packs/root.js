@@ -13,17 +13,6 @@ import College from '../college'
 import store from '../store'
 
 class Root extends React.Component {
-  state = {
-    colleges: []
-  }
-
-  componentDidMount() {
-    fetch('/api/real_time_all')
-      .then((response) => response.json().then((json) => {
-        this.setState({ colleges: json })
-      }))
-  }
-
   render() {
     return (
       <Provider store={store}>

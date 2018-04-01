@@ -20,7 +20,7 @@ class CollegeSeats extends React.PureComponent {
   }
 
   render() {
-    const keys = Object.keys(this.props.capacity_data)
+    const keys = Object.keys(this.props.courses)
     let className = 'CollegeSeats--courses'
     if (this.state.didLoad) {
       className += ' CollegeSeats--after-first-load'
@@ -31,7 +31,6 @@ class CollegeSeats extends React.PureComponent {
           <CourseSeats
             key={key}
             code={key}
-            capacity_data={this.props.capacity_data[key]}
             course={this.props.courses[key]}
           />
         )}
