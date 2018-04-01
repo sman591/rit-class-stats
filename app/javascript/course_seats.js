@@ -11,10 +11,15 @@ export default class CourseSeats extends React.PureComponent {
     for (let i = 0; i < filledSeats; i++) {
       seats[i] = FILLED
     }
-    const courseName = (this.props.course && this.props.course.public_id) || this.props.code
+    const id = this.props.course.public_id
+    const code = id.substring(5, 8)
+    const section = id.substring(9)
     return (
       <div className="CourseSeats">
-        <div className="CourseSeats--code">{courseName}</div>
+        <div className="CourseSeats--name">
+          <div className="CourseSeats--code">{code}</div>
+          <div className="CourseSeats--section">{section}</div>
+        </div>
         <div className="CourseSeats--seats">
           {seats.map((seat, index) =>
             <div

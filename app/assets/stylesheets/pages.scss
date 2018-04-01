@@ -2,21 +2,52 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+body {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+}
+
+.CollegeSeats__department {
+  border-bottom: 1px solid #888;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+}
+
+.CollegeSeats__department-name {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 15px 0 10px 10px;
+}
+
 .CollegeSeats--courses {
   display: grid;
   grid-template-columns: repeat(auto-fill, 52px);
   grid-gap: 5px;
   grid-auto-rows: minmax(10px, auto);
+  padding: 0 10px;
 }
 
 .CourseSeats {
   border: 1px solid #ddd;
 }
 
-.CourseSeats--code {
-  font-size: 10px;
+.CourseSeats--name {
   overflow: hidden;
-  height: 12px;
+  height: 17px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: baseline;
+  line-height: 18px;
+}
+
+.CourseSeats--code {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.CourseSeats--section {
+  font-size: 10px;
+  margin-left: 5px;
 }
 
 .CourseSeats--seats {

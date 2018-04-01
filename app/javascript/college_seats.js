@@ -20,20 +20,39 @@ class CollegeSeats extends React.PureComponent {
   }
 
   render() {
-    const keys = Object.keys(this.props.courses)
-    let className = 'CollegeSeats--courses'
+    const courses = Object.values(this.props.courses)
+
+    const coursesByDepartment = courses.reduce((acc, course) => {
+      acc[course.department] = acc[course.department] || []
+      acc[course.department].push(course)
+      return acc
+    }, {})
+
+    let className = ''
     if (this.state.didLoad) {
-      className += ' CollegeSeats--after-first-load'
+      className += 'CollegeSeats--after-first-load'
     }
+
     return (
       <div className={className}>
-        {keys.map((key) =>
-          <CourseSeats
-            key={key}
-            code={key}
-            course={this.props.courses[key]}
-          />
-        )}
+        {Object.entries(coursesByDepartment).map((entry) => {
+          const dept = entry[0]
+          const deptCourses = entry[1]
+          return (
+            <div className="CollegeSeats__department" key={dept}>
+              <div className="CollegeSeats__department-name">{dept}</div>
+              <div className="CollegeSeats--courses">
+                {deptCourses.map((course) =>
+                  <CourseSeats
+                    key={course.public_id}
+                    code={course.public_id}
+                    course={course}
+                  />
+                )}
+              </div>
+            </div>
+          )
+        })}
       </div>
     )
   }
