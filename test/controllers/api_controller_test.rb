@@ -37,16 +37,16 @@ class ApiControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '#courses should succeed' do
-    get api_courses_url
+    get api_courses_url(college: 'foo')
     assert_response :success
   end
 
   test '#courses should return each course' do
-    create(:course, course_id: 'foo')
-    create(:course, course_id: 'bar')
-    create(:course, course_id: 'baz')
+    create(:course, course_id: 'foo', college: 'foo')
+    create(:course, course_id: 'bar', college: 'foo')
+    create(:course, course_id: 'baz', college: 'foo')
 
-    get api_courses_url
+    get api_courses_url(college: 'foo')
     assert_response :success
     body = parse_json_body
 

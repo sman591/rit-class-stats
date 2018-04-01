@@ -13,7 +13,7 @@ class ApiController < ApplicationController
   end
 
   def courses
-    courses = Course.order('college, department, course_id DESC')
+    courses = Course.where(college: params[:college]).order('college, department, course_id DESC')
     json_response(
       courses.as_json(
         methods: :public_id,

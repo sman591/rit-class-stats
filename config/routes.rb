@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   scope '/api', controller: :api, as: :api, defaults: { format: :json } do
     get :real_time_all
-    get :courses
+    get 'courses/:college', to: 'api#courses', as: 'courses'
     post :import
   end
 
