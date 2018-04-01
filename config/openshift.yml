@@ -175,46 +175,6 @@ objects:
           resources:
             limits:
               memory: "${MEMORY_LIMIT}"
-- kind: ImageStream
-  apiVersion: v1
-  metadata:
-    name: worker
-    annotations:
-      description: Keeps track of changes in the application image
-- kind: BuildConfig
-  apiVersion: v1
-  metadata:
-    name: worker
-    annotations:
-      description: Defines how to build the application
-      template.alpha.openshift.io/wait-for-ready: 'true'
-  spec:
-    source:
-      type: Git
-      git:
-        uri: "${SOURCE_REPOSITORY_URL}"
-        ref: "${SOURCE_REPOSITORY_REF}"
-      contextDir: "${CONTEXT_DIR}"
-    strategy:
-      type: Source
-      sourceStrategy:
-        from:
-          kind: ImageStreamTag
-          namespace: openshift
-          name: ruby:2.4
-        env:
-        - name: DISABLE_ASSET_COMPILATION
-          value: "true"
-    output:
-      to:
-        kind: ImageStreamTag
-        name: "worker:latest"
-    triggers:
-    - type: ImageChange
-    - type: ConfigChange
-    - type: GitHub
-      github:
-        secret: "${GITHUB_WEBHOOK_SECRET}"
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
