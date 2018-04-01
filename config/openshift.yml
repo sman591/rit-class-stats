@@ -93,8 +93,8 @@ objects:
       template.alpha.openshift.io/wait-for-ready: 'true'
   spec:
     strategy:
-      type: Recreate
-      recreateParams:
+      type: Rolling
+      rollingParams:
         pre:
           failurePolicy: Abort
           execNewPod:
