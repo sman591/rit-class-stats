@@ -28,13 +28,52 @@
   flex: none;
   width: 5px;
   height: 5px;
+  margin: 1px;
   background: #333;
 }
 
 .CourseSeats--seat--e {
-  background: #dfd;
+  background: #a6d6b2;
+
+  .CourseSeats--after-first-load & {
+    animation-duration: 1.2s;
+    animation-name: glow-green;
+    animation-iteration-count: 1;
+  }
 }
 
 .CourseSeats--seat--f {
-  background: #fdd;
+  background: #f5abab;
+
+  .CourseSeats--after-first-load & {
+    animation-duration: 1.2s;
+    animation-name: glow-red;
+    animation-iteration-count: 1;
+  }
+}
+
+@keyframes glow-green {
+  0% {
+    background: #7efb9d;
+    box-shadow: 0 0 5px 1px rgba(#7efb9d, 1);
+    z-index: 1;
+  }
+
+  100% {
+    box-shadow: 0 0 5px 1px rgba(#7efb9d, 0);
+    z-index: 1;
+  }
+}
+
+@keyframes glow-red {
+  0% {
+    background: #ff7d7d;
+    box-shadow: 0 0 5px 1px rgba(#ff7d7d, 1);
+    z-index: 1;
+  }
+
+  100% {
+    box-shadow: 0 0 5px 1px rgba(#ff7d7d, 0);
+    z-index: 1;
+  }
 }
