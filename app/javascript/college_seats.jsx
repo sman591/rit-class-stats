@@ -12,7 +12,8 @@ export default class CollegeSeats extends React.PureComponent {
           <CourseSeats
             key={key}
             code={key}
-            course={this.props.capacity_data[key]}
+            capacity_data={this.props.capacity_data[key]}
+            course={this.props.courses[key]}
           />
         )}
       </div>

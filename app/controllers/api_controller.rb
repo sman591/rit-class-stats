@@ -13,9 +13,15 @@ class ApiController < ApplicationController
   end
 
   def courses
-    json_response(
-      Course.order('college, department, course_id DESC')
-    )
+    courses = Course.order('college, department, course_id DESC')
+    data = courses.map do |course|
+      response = {}
+      attributes = Course.attribute_names.reject { |attr| attr == 'data' }
+      attributes.each { |attr| response[attr] = course[attr] }
+      response[:public_id] = course.public_id
+      response
+    end
+    json_response(data)
   end
 
   def import

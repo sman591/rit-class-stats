@@ -10,4 +10,10 @@ class Course < ApplicationRecord
   # validates_inclusion_of :college, in: %w( ... )
 
   validates :course_id, uniqueness: { case_sensitive: false, scope: 'department' }
+
+  def public_id
+    code = data['catalogNumber']
+    section = data['section']
+    "#{department} #{code}-#{section}"
+  end
 end
