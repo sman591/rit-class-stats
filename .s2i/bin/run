@@ -2,7 +2,7 @@
 
 set -e
 
-if [ -z "$RUN_COMMAND" ]
+if [ -z "$RUN_COMMAND" ]; then
   /usr/libexec/s2i/assemble
 else
   exec $RUN_COMMAND
