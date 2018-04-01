@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+
+if [ -z "$RUN_COMMAND" ]
+  /usr/libexec/s2i/assemble
+else
+  exec $RUN_COMMAND
+fi
+
+rc=$?
+
+exit $rc

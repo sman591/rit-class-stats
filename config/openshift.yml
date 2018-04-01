@@ -233,7 +233,7 @@ objects:
         - worker
         from:
           kind: ImageStreamTag
-          name: "worker:latest"
+          name: "${NAME}:latest"
     - type: ConfigChange
     replicas: 1
     selector:
@@ -247,8 +247,9 @@ objects:
         containers:
         - name: worker
           image: " "
-          command: ["bundle", "exec", "sidekiq"]
           env:
+          - name: RUN_COMMAND
+            value: "bundle exec sidekiq"
           - name: DATABASE_SERVICE_NAME
             value: "${DATABASE_SERVICE_NAME}"
           - name: POSTGRESQL_USER
