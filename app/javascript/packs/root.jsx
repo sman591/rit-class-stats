@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
 import {
+  BrowserRouter as Router,
   Route,
   Switch
 } from 'react-router-dom'
@@ -10,7 +10,7 @@ import {
 
 import Colleges from '../colleges'
 import College from '../college'
-import store, { history } from '../store';
+import store from '../store';
 
 class Root extends React.Component {
   state = {
@@ -27,12 +27,12 @@ class Root extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <ConnectedRouter history={history}>
+        <Router>
           <Switch>
             <Route exact path="/" component={Colleges} />
             <Route path="/college/:code" component={College} />
           </Switch>
-        </ConnectedRouter>
+        </Router>
       </Provider>
     )
   }
