@@ -104,8 +104,6 @@ objects:
     - type: GitHub
       github:
         secret: "${GITHUB_WEBHOOK_SECRET}"
-    postCommit:
-      script: bundle exec rake test
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
@@ -205,18 +203,58 @@ objects:
           resources:
             limits:
               memory: "${MEMORY_LIMIT}"
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: worker
+    annotations:
+      description: Keeps track of changes in the application image
+- kind: BuildConfig
+  apiVersion: v1
+  metadata:
+    name: worker
+    annotations:
+      description: Defines how to build the application
+      template.alpha.openshift.io/wait-for-ready: 'true'
+  spec:
+    source:
+      type: Git
+      git:
+        uri: "${SOURCE_REPOSITORY_URL}"
+        ref: "${SOURCE_REPOSITORY_REF}"
+      contextDir: "${CONTEXT_DIR}"
+    strategy:
+      type: Source
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          namespace: "${NAMESPACE}"
+          name: ruby:2.4
+        env:
+        - name: RUBYGEM_MIRROR
+          value: "${RUBYGEM_MIRROR}"
+    output:
+      to:
+        kind: ImageStreamTag
+        name: "worker:latest"
+    triggers:
+    - type: ImageChange
+    - type: ConfigChange
+    - type: GitHub
+      github:
+        secret: "${GITHUB_WEBHOOK_SECRET}"
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
     name: worker
     annotations:
-      description: Defines how to deploy the application server
+      description: Defines how to deploy the worker server
       template.alpha.openshift.io/wait-for-ready: 'true'
   spec:
     strategy:
       type: Custom
       customParams:
-        image: "${NAME}:latest"
+        image: "worker:latest"
         command:
           - bundle
           - exec
@@ -229,7 +267,7 @@ objects:
         - worker
         from:
           kind: ImageStreamTag
-          name: "${NAME}:latest"
+          name: "worker:latest"
     - type: ConfigChange
     replicas: 1
     selector:
