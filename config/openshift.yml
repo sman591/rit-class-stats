@@ -220,18 +220,11 @@ objects:
   metadata:
     name: worker
     annotations:
-      description: Defines how to deploy the worker server
+      description: Defines how to deploy the worker
       template.alpha.openshift.io/wait-for-ready: 'true'
   spec:
     strategy:
-      type: Custom
-      customParams:
-        image: "worker:latest"
-        namespace: "${NAMESPACE}"
-        command:
-          - bundle
-          - exec
-          - sidekiq
+      type: Recreate
     triggers:
     - type: ImageChange
       imageChangeParams:
@@ -241,7 +234,6 @@ objects:
         from:
           kind: ImageStreamTag
           name: "worker:latest"
-          namespace: "${NAMESPACE}"
     - type: ConfigChange
     replicas: 1
     selector:
@@ -255,6 +247,7 @@ objects:
         containers:
         - name: worker
           image: " "
+          command: ["bundle", "exec", "sidekiq"]
           env:
           - name: DATABASE_SERVICE_NAME
             value: "${DATABASE_SERVICE_NAME}"
@@ -338,8 +331,7 @@ objects:
       spec:
         volumes:
         - name: postgres-data
-          persistentVolumeClaim:
-            claimName: "${DATABASE_SERVICE_NAME}"
+          emptyDir: {}
         containers:
         - name: postgresql
           image: " "
