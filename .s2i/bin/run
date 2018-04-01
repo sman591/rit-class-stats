@@ -3,7 +3,7 @@
 set -e
 
 if [ -z "$RUN_COMMAND" ]; then
-  /usr/libexec/s2i/assemble
+  /usr/libexec/s2i/run
 else
   exec $RUN_COMMAND
 fi
