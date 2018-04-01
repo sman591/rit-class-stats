@@ -1,6 +1,9 @@
 {
   "name": "rit-class-stats",
   "private": true,
+  "scripts": {
+    "lint": "yarn run eslint app/javascript/"
+  },
   "dependencies": {
     "@rails/webpacker": "^3.4.1",
     "babel-eslint": "^7.2.3",
