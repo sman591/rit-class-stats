@@ -3,9 +3,9 @@
   "private": true,
   "dependencies": {
     "@rails/webpacker": "^3.4.1",
+    "babel-eslint": "^7.2.3",
     "babel-preset-react": "^6.24.1",
     "coffeescript": "1.12.7",
-    "babel-eslint": "^7.2.3",
     "eslint": "^4.1.1",
     "eslint-config-react-app": "^2.1.0",
     "eslint-loader": "^2.0.0",
@@ -16,8 +16,12 @@
     "prop-types": "^15.6.1",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
+    "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
-    "webpack-cli": "^2.0.13"
+    "react-router-redux": "^4.0.8",
+    "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "webpack-dev-server": "2.11.2"
