@@ -1,11 +1,11 @@
-export const LOADING = 'counter/LOADING';
-export const UPDATE = 'counter/UPDATE';
+export const LOADING = 'counter/LOADING'
+export const UPDATE = 'counter/UPDATE'
 
 const initialState = {
   courses: [],
   loadedAt: null,
   isLoading: false,
-};
+}
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -13,7 +13,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLoading: true
-      };
+      }
 
     case UPDATE:
       return {
@@ -21,20 +21,20 @@ export default (state = initialState, action) => {
         courses: action.courses,
         loadedAt: new Date(),
         isLoading: false,
-      };
+      }
 
     default:
-      return state;
+      return state
   }
-};
+}
 
 export const loading = () => {
   return dispatch => {
     dispatch({
       type: LOADING,
-    });
-  };
-};
+    })
+  }
+}
 
 export const forceUpdate = (college) => {
   return async (dispatch, getState) => {
@@ -51,9 +51,9 @@ export const forceUpdate = (college) => {
     dispatch({
       type: UPDATE,
       courses,
-    });
-  };
-};
+    })
+  }
+}
 
 export const update = (college) => {
   return (dispatch, getState) => {
@@ -62,5 +62,5 @@ export const update = (college) => {
       return
     }
     dispatch(forceUpdate(college))
-  };
-};
+  }
+}
