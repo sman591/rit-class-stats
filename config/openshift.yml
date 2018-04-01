@@ -217,6 +217,9 @@ objects:
           kind: ImageStreamTag
           namespace: openshift
           name: ruby:2.4
+        env:
+        - name: DISABLE_ASSET_COMPILATION
+          value: "true"
     output:
       to:
         kind: ImageStreamTag
@@ -239,6 +242,7 @@ objects:
       type: Custom
       customParams:
         image: "worker:latest"
+        namespace: "${NAMESPACE}"
         command:
           - bundle
           - exec
@@ -252,6 +256,7 @@ objects:
         from:
           kind: ImageStreamTag
           name: "worker:latest"
+          namespace: "${NAMESPACE}"
     - type: ConfigChange
     replicas: 1
     selector:
