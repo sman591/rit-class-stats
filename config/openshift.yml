@@ -37,8 +37,6 @@ objects:
     database-user: "${DATABASE_USER}"
     database-password: "${DATABASE_PASSWORD}"
     database-admin-password: "${DATABASE_ADMIN_PASSWORD}"
-    application-user: "${APPLICATION_USER}"
-    application-password: "${APPLICATION_PASSWORD}"
     keybase: "${SECRET_KEY_BASE}"
 - kind: Service
   apiVersion: v1
@@ -91,9 +89,6 @@ objects:
           kind: ImageStreamTag
           namespace: openshift
           name: ruby:2.4
-        env:
-        - name: RUBYGEM_MIRROR
-          value: "${RUBYGEM_MIRROR}"
     output:
       to:
         kind: ImageStreamTag
@@ -188,16 +183,6 @@ objects:
                 key: redis-password
           - name: APPLICATION_DOMAIN
             value: "${APPLICATION_DOMAIN}"
-          - name: APPLICATION_USER
-            valueFrom:
-              secretKeyRef:
-                name: "${NAME}"
-                key: application-user
-          - name: APPLICATION_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: "${NAME}"
-                key: application-password
           - name: RAILS_ENV
             value: "${RAILS_ENV}"
           resources:
@@ -230,9 +215,6 @@ objects:
           kind: ImageStreamTag
           namespace: openshift
           name: ruby:2.4
-        env:
-        - name: RUBYGEM_MIRROR
-          value: "${RUBYGEM_MIRROR}"
     output:
       to:
         kind: ImageStreamTag
@@ -312,16 +294,6 @@ objects:
                 key: redis-password
           - name: APPLICATION_DOMAIN
             value: "${APPLICATION_DOMAIN}"
-          - name: APPLICATION_USER
-            valueFrom:
-              secretKeyRef:
-                name: "${NAME}"
-                key: application-user
-          - name: APPLICATION_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: "${NAME}"
-                key: application-password
           - name: RAILS_ENV
             value: "${RAILS_ENV}"
           resources:
@@ -561,18 +533,6 @@ parameters:
   description: Your secret key for verifying the integrity of signed cookies.
   generate: expression
   from: "[a-z0-9]{127}"
-- name: APPLICATION_USER
-  displayName: Application Username
-  required: true
-  description: The application user that is used within the sample application to
-    authorize access on pages.
-  value: openshift
-- name: APPLICATION_PASSWORD
-  displayName: Application Password
-  required: true
-  description: The application password that is used within the sample application
-    to authorize access on pages.
-  value: secret
 - name: RAILS_ENV
   displayName: Rails Environment
   required: true
@@ -605,10 +565,6 @@ parameters:
 - name: POSTGRESQL_SHARED_BUFFERS
   displayName: Shared Buffer Amount
   value: 12MB
-- name: RUBYGEM_MIRROR
-  displayName: Custom RubyGems Mirror URL
-  description: The custom RubyGems mirror URL
-  value: ''
 - name: REDIS_SERVICE_NAME
   displayName: Redis Service Name
   value: redis
