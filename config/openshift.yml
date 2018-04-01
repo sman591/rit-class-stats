@@ -391,7 +391,7 @@ objects:
   metadata:
     annotations:
       template.openshift.io/expose-uri: redis://{.spec.clusterIP}:{.spec.ports[?(.name=="redis")].port}
-    name: "${REDIS_SERVICE_NAME}"
+    name: redis
   spec:
     ports:
     - name: redis
@@ -400,7 +400,7 @@ objects:
       protocol: TCP
       targetPort: 6379
     selector:
-      name: "${REDIS_SERVICE_NAME}"
+      name: redis
     sessionAffinity: None
     type: ClusterIP
   status:
@@ -410,17 +410,17 @@ objects:
   metadata:
     annotations:
       template.alpha.openshift.io/wait-for-ready: 'true'
-    name: "${REDIS_SERVICE_NAME}"
+    name: redis
   spec:
     replicas: 1
     selector:
-      name: "${REDIS_SERVICE_NAME}"
+      name: redis
     strategy:
       type: Recreate
     template:
       metadata:
         labels:
-          name: "${REDIS_SERVICE_NAME}"
+          name: redis
       spec:
         containers:
         - capabilities: {}
@@ -459,13 +459,13 @@ objects:
           terminationMessagePath: "/dev/termination-log"
           volumeMounts:
           - mountPath: "/var/lib/redis/data"
-            name: "${REDIS_SERVICE_NAME}-data"
+            name: redis-data
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         volumes:
         - emptyDir:
             medium: ''
-          name: "${REDIS_SERVICE_NAME}-data"
+          name: redis-data
     triggers:
     - imageChangeParams:
         automatic: true
@@ -560,9 +560,6 @@ parameters:
 - name: POSTGRESQL_SHARED_BUFFERS
   displayName: Shared Buffer Amount
   value: 12MB
-- name: REDIS_SERVICE_NAME
-  displayName: Redis Service Name
-  value: redis
 - name: REDIS_PASSWORD
   displayName: Redis Connection Password
   generate: expression
