@@ -26,7 +26,16 @@ class ScrapeSnapshotConsumerJobTest < ActiveJob::TestCase
     assert_difference 'Course.count', 0 do
       ScrapeSnapshotConsumerJob.perform_now(snapshot_id: snapshot.id)
     end
-    assert course.reload.snapshot_at > 1.day.ago
+    assert course.reload.snapshot_at > 1.day.ago, 'snapshot_at is old, expected to be recent'
+  end
+
+  test 'job should not update courses with old data' do
+    snapshot = create(:scrape_snapshot, courses: courses, snapshot_at: 2.days.ago)
+    course = create(:course, college: snapshot.college, department: 'abc', course_id: '1-1-1-1-1', snapshot_at: 5.minutes.ago)
+    assert_difference 'Course.count', 0 do
+      ScrapeSnapshotConsumerJob.perform_now(snapshot_id: snapshot.id)
+    end
+    assert course.reload.snapshot_at > 1.day.ago, 'snapshot_at is old, expected to be recent'
   end
 
   private

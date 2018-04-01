@@ -46,6 +46,7 @@ class ScrapeSnapshotConsumerJob < ApplicationJob
         course_id: pp_search_id
       }
       Course.where(attributes).first_or_initialize(attributes).tap do |course|
+        next if course.snapshot_at? && course.snapshot_at >= course_real_time.snapshot_at
         course.snapshot_at = course_real_time.snapshot_at
         course.data = current
         course.capacity_data = course_real_time.capacity_data[pp_search_id]
