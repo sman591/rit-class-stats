@@ -65,21 +65,25 @@ body {
 
 .CourseSeats--seat--e {
   background: #a6d6b2;
+  animation-duration: 6s;
+  animation-name: glow-green;
+  animation-iteration-count: 1;
+  animation-timing-function: easeInCirc;
 
-  .CourseSeats--after-first-load & {
-    animation-duration: 1.2s;
-    animation-name: glow-green;
-    animation-iteration-count: 1;
+  .CollegeSeats--before-first-load & {
+    animation-duration: 0s;
   }
 }
 
 .CourseSeats--seat--f {
   background: #f5abab;
+  animation-duration: 6s;
+  animation-name: glow-red;
+  animation-iteration-count: 1;
+  animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.335);
 
-  .CourseSeats--after-first-load & {
-    animation-duration: 1.2s;
-    animation-name: glow-red;
-    animation-iteration-count: 1;
+  .CollegeSeats--before-first-load & {
+    animation-duration: 0s;
   }
 }
 

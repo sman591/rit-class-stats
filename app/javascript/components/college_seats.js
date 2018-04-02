@@ -18,7 +18,7 @@ class CollegeSeats extends React.PureComponent {
 
   componentDidMount() {
     this.props.updateCourses(this.props.college)
-    this.timeout = setTimeout(() => this.setState({ didLoad: true }), 5000)
+    this.timeout = setTimeout(() => this.setState({ didLoad: true }), 10000)
   }
 
   componentWillUnmount() {
@@ -36,8 +36,8 @@ class CollegeSeats extends React.PureComponent {
     Object.values(coursesByDepartment).forEach(value => value.sort(sortCourses))
 
     let className = ''
-    if (this.state.didLoad) {
-      className += 'CollegeSeats--after-first-load'
+    if (!this.state.didLoad) {
+      className += 'CollegeSeats--before-first-load'
     }
 
     return (
