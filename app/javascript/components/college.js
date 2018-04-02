@@ -8,9 +8,8 @@ export default class College extends React.PureComponent {
     const code = this.props.match.params.code.toUpperCase()
     return (
       <div>
-        <Link to="/"><button>&laquo; Back</button></Link>
         <h1>{code}</h1>
-        <CollegeSeats college={code} />
+        <CollegeSeats key={code} college={code} />
       </div>
     )
   }

@@ -6,6 +6,17 @@ body {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
 }
 
+.Nav {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.Nav__link {
+  padding: 10px 20px;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
 .CollegeSeats__department {
   border-bottom: 1px solid #888;
   margin-bottom: 15px;

@@ -2,7 +2,7 @@ export const LOADING = 'counter/LOADING'
 export const UPDATE = 'counter/UPDATE'
 export const PATCH_REAL_TIME = 'counter/PATCH_REAL_TIME'
 
-const COLLEGES = ['GCCIS', 'CIAS', 'SCB', 'CHST', 'COS', 'CAST', 'CLA', 'INTSD', 'KGCOE', 'GIS', 'NTID']
+export const COLLEGES = ['GCCIS', 'CIAS', 'SCB', 'CHST', 'COS', 'CAST', 'CLA', 'INTSD', 'KGCOE', 'GIS', 'NTID']
 const initialState = COLLEGES.reduce((state, college) => {
   state[college] = {
     courses: {},
