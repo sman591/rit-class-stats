@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { update as updateCourses } from 'modules/courses'
-import CourseSeats from 'course_seats'
+import CourseSeats from 'components/course_seats'
 
 const sortCourses = (a, b) => {
   const keyA = a.public_id

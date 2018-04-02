@@ -1,6 +1,6 @@
 import React from 'react'
 
-import CollegeCard from 'college_card'
+import CollegeCard from 'components/college_card'
 
 export default class Colleges extends React.PureComponent {
   state = {

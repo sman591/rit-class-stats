@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import counter from './counter'
-import courses from './courses'
+import counter from 'modules/counter'
+import courses from 'modules/courses'
 
 export default combineReducers({
   counter,

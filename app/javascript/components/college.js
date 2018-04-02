@@ -1,8 +1,7 @@
 import React from 'react'
-
 import { Link } from 'react-router-dom'
 
-import CollegeSeats from 'college_seats'
+import CollegeSeats from 'components/college_seats'
 
 export default class College extends React.PureComponent {
   render() {
