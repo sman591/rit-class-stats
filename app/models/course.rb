@@ -9,7 +9,7 @@ class Course < ApplicationRecord
   validates_presence_of :capacity_data
   # validates_inclusion_of :college, in: %w( ... )
 
-  validates :course_id, uniqueness: { case_sensitive: false, scope: 'department' }
+  validates :course_id, uniqueness: { case_sensitive: false }
 
   def public_id
     code = data['catalogNumber']

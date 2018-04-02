@@ -10,5 +10,5 @@ class CourseTest < ActiveSupport::TestCase
   should validate_presence_of :data
   should validate_presence_of :capacity_data
 
-  should validate_uniqueness_of(:course_id).scoped_to(:department)
+  should validate_uniqueness_of(:course_id)
 end
