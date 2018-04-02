@@ -1,5 +1,6 @@
 export const LOADING = 'counter/LOADING'
 export const UPDATE = 'counter/UPDATE'
+export const PATCH_REAL_TIME = 'counter/PATCH_REAL_TIME'
 
 const COLLEGES = ['GCCIS', 'CIAS', 'SCB', 'CHST', 'COS', 'CAST', 'CLA', 'INTSD', 'KGCOE', 'GIS', 'NTID']
 const initialState = COLLEGES.reduce((state, college) => {
@@ -33,6 +34,27 @@ export default (state = initialState, action) => {
         }
       }
 
+    case PATCH_REAL_TIME:
+      const courseRealTime = action.course_real_time
+      const courses = {...state[action.college].courses}
+      const capacityData = courseRealTime.capacity_data
+      Object.keys(capacityData).forEach((key) => {
+        const course = {...courses[key]}
+        if (!course) {
+          return
+        }
+        course.snapshot_at = courseRealTime.snapshot_at
+        course.capacity_data = capacityData[key]
+        courses[key] = course
+      })
+      return {
+        ...state,
+        [action.college]: {
+          ...state[action.college],
+          courses,
+        }
+      }
+
     default:
       return state
   }
@@ -62,6 +84,16 @@ export const forceUpdate = (college) => {
       type: UPDATE,
       college,
       courses,
+    })
+  }
+}
+
+export const patchRealTime = (college, courseRealTime) => {
+  return async (dispatch, getState) => {
+    dispatch({
+      type: PATCH_REAL_TIME,
+      college,
+      course_real_time: courseRealTime,
     })
   }
 }

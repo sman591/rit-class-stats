@@ -11,6 +11,6 @@ class CourseRealTimeRelayJob < ApplicationJob
     newer_obj = CourseRealTime.where(college: @course_real_time.college).order('snapshot_at DESC').limit(1).first
     return if newer_obj.id != @course_real_time.id
 
-    ActionCable.server.broadcast 'course_real_times', course_real_time: @course_real_time
+    RealTimeChannel.broadcast_to 'course_real_times', course_real_time: @course_real_time
   end
 end

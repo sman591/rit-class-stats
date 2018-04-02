@@ -11,7 +11,7 @@ const sortCourses = (a, b) => {
   return keyA.localeCompare(keyB)
 }
 
-class CollegeSeats extends React.PureComponent {
+class CollegeSeats extends React.Component {
   state = {
     didLoad: false
   }
@@ -53,7 +53,7 @@ class CollegeSeats extends React.PureComponent {
                   <CourseSeats
                     key={course.public_id}
                     code={course.public_id}
-                    course={course}
+                    {...course}
                   />
                 )}
               </div>
