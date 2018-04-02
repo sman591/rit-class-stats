@@ -101,7 +101,8 @@ export const patchRealTime = (college, courseRealTime) => {
 export const update = (college) => {
   return (dispatch, getState) => {
     const { courses } = getState()
-    if (courses[college].loadedAt !== null) {
+    const loadedAt = courses[college].loadedAt
+    if (loadedAt && Date.now() - Date.parse(loadedAt) < 30 * 1000) {
       return
     }
     dispatch(forceUpdate(college))
