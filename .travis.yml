@@ -32,3 +32,8 @@ script:
   - RUN_COVERAGE=travis bin/rails test
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+deploy:
+  provider: script
+  script: curl -X POST https://${OPENSHIFT_DOMAIN_PORT}/oapi/v1/namespaces/rit-class-stats/buildconfigs/web/webhooks/${OPENSHIFT_WEBHOOK_SECRET}/generic
+  on:
+    branch: master
