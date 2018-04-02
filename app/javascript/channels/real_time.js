@@ -12,7 +12,7 @@ const realTime = () => {
     },
     received: function(data) {
       console.log('received', data)
-      store.dispatch(patchRealTime('GCCIS', data.course_real_time))
+      store.dispatch(patchRealTime(data.course_real_time.college, data.course_real_time))
     }
   })
 }
