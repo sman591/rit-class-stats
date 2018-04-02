@@ -1431,10 +1431,7 @@ Style/Dir:
 
 Style/Documentation:
   Description: 'Document classes and non-namespace modules.'
-  Enabled: true
-  Exclude:
-    - 'spec/**/*'
-    - 'test/**/*'
+  Enabled: false # Changed from default
 
 Style/DoubleNegation:
   Description: 'Checks for uses of double negation (!!).'
