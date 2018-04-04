@@ -1,6 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import moment from 'moment'
 
 import { update as updateCourses } from 'modules/courses'
 import CourseSeats from 'components/course_seats'
@@ -40,8 +41,14 @@ class CollegeSeats extends React.Component {
       className += 'CollegeSeats--before-first-load'
     }
 
+    let lastUpdated = 'N/A'
+    if (courses.length > 0) {
+      lastUpdated = moment(courses[0].snapshot_at).format('dddd, MMMM Do YYYY, h:mm:ss a')
+    }
+
     return (
       <div className={className}>
+        <div><strong>Last Updated:</strong> {lastUpdated}</div>
         {Object.entries(coursesByDepartment).map((entry) => {
           const dept = entry[0]
           const deptCourses = entry[1]
