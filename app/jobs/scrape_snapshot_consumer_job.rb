@@ -6,6 +6,7 @@ class ScrapeSnapshotConsumerJob < ApplicationJob
   def perform(*args)
     snapshot_id = args[0][:snapshot_id]
     @snapshot = ScrapeSnapshot.find_by_id(snapshot_id)
+    # TODO: job will always "complete" on retry if update_courses caused the error
     return if @snapshot.blank? || @snapshot.consume_started?
 
     @snapshot.update_attribute(:consume_started_at, Time.now)
