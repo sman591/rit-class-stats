@@ -11,3 +11,9 @@ To get total count of seats in a college:
 
 x = CourseRealTime.last.capacity_data
 x.keys.map { |key| x[key]['enrollment_cap'] }.reduce(:+)
+
+Apply random capacity updates:
+
+x = CourseRealTime.last
+sample = x.capacity_data.keys.sample(x.capacity_data.keys.count / 4)
+sample.map { |key| x.capacity_data[key]['enrollment_total'] += Random.rand(-3..3) }; x.save
