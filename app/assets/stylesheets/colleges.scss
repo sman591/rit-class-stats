@@ -1,0 +1,44 @@
+.Colleges {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin: 10px 10px 15px;
+}
+
+.CollegeCard {
+  background: #fff;
+  padding: 20px;
+  margin: 10px;
+  width: 300px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 1px 6px rgba(0,0,0,.1);
+}
+
+.CollegeCard__title {
+  margin: 0 0 20px;
+  text-align: center;
+}
+
+.CollegeCard__text {
+  text-align: center;
+  color: #666;
+}
+
+.CollegeCard__text strong {
+  color: #222;
+}
+
+.CollegeCard__button {
+  background: #00c3e8;
+  color: #fff;
+  border: none;
+  width: 100%;
+  font-size: 16px;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background: darken(#00c3e8, 10%);
+  }
+}

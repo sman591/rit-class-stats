@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { COLLEGES } from 'modules/courses'
+import { COLLEGES } from '../constants'
 
 export default class Nav extends React.Component {
   render() {
