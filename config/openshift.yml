@@ -53,6 +53,26 @@ objects:
     to:
       kind: Service
       name: "${NAME}"
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: postgres-data
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 15Gi
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: redis-data
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
 - kind: ImageStream
   apiVersion: v1
   metadata:
@@ -366,8 +386,8 @@ objects:
             privileged: false
         volumes:
         - name: "${DATABASE_SERVICE_NAME}-data"
-          emptyDir:
-            medium: ''
+          persistentVolumeClaim:
+            claimName: postgres-data
         restartPolicy: Always
         dnsPolicy: ClusterFirst
 - kind: Service
@@ -447,9 +467,9 @@ objects:
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         volumes:
-        - emptyDir:
-            medium: ''
-          name: redis-data
+        - name: redis-data
+          persistentVolumeClaim:
+            claimName: postgres-data
     triggers:
     - imageChangeParams:
         automatic: true
